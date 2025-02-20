@@ -19,3 +19,21 @@ Fred Jones      fred@city.com   6045553434      102     75 57 Street            
 Leroy Jenkins   leroy@wow.ca    2342222323      103     65 Blizzard Ave         100     
 Jen Mezei       jen@shaw.ca     6042231134      104     891 Cullen Cresc        0
 """
+
+import sqlite3
+
+file = 'dbase.db'
+connection = sqlite3.connect(file)
+print(connection)
+
+cursor = connection.cursor()
+query = "select sqlite_version();"
+query = """create table customers 
+( 
+id integer primary key autoincrement, 
+firstName tinytext, 
+last_name tinytext,
+email tinytext, 
+cnum int,
+joinDate timestamp); """
+cursor.execute(query)
