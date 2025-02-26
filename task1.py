@@ -28,15 +28,20 @@ print(connection)
 
 cursor = connection.cursor()
 query = "select sqlite_version();"
+
+query = "drop table if exists customers"
+cursor.execute(query)
+
 query = """create table customers 
 ( 
 id integer primary key autoincrement, 
 name tinytext, 
 email tinytext,
 phoneNumber int, 
-id int,
-address tinytext
+customerid int,
+address tinytext,
 balance int); """
+cursor.execute(query)
 
 data = [
 ('Joe Smith', 'joe@gmail.com', '7783341111', 101, '1234 Sesame Street', 0),
@@ -45,7 +50,8 @@ data = [
 ('Jen Mezei', 'jen@shaw.ca', '6042231134', 104, '891 Cullen Cresc', 0)
 ]
 for i in data:
-    query = f"insert into customers (name, email, phoneNumber, id, address, balance) values ('{i[0]}','{i[1]}','{i[2]}','{i[3]}','{i[4]}','{i[5]});"
+    query = f"insert into customers (name, email, phoneNumber, customerid, address, balance) values ('{i[0]}','{i[1]}','{i[2]}','{i[3]}','{i[4]}','{i[5]}');"
+    cursor.execute(query)
 
 connection.commit()
 query = "select * from customers"

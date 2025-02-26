@@ -31,15 +31,21 @@ print(connection)
 
 cursor = connection.cursor()
 query = "select sqlite_version();"
-query = """create table veterinarian 
+
+query = "drop table if exists veterinarian"
+cursor.execute(query)
+
+query = """create table veterinarian
 ( 
 id integer primary key autoincrement, 
 name tinytext, 
 species tinytext,
 breed tinytext, 
 age int,
-s/n tinytext,
-id int); """
+gender tinytext,
+[s/n] tinytext,
+customerid int); """
+cursor.execute(query)
 
 data = [
 ('Fluffy', 'dog', 'Pomeraniam', 5, 'm', 'true', 101),
@@ -49,12 +55,16 @@ data = [
 ('Copper', 'dog', 'Beagle', 12, 'm', 'true', 104)
 ]
 for i in data:
-    query = f"insert into veterinarian (name, species, breed, age, s/n, id) values ('{i[0]}','{i[1]}','{i[2]}','{i[3]}','{i[4]}','{i[5]}','{i[6]});"
+    query = f"insert into veterinarian (name, species, breed, age, gender, [s/n], customerid) values ('{i[0]}','{i[1]}','{i[2]}','{i[3]}','{i[4]}','{i[5]}','{i[6]}');"
+    cursor.execute(query)
 
-connection.commit()
 query = "select * from veterinarian"
 cursor.execute(query)
+connection.commit()
+
 result = cursor.fetchall()
 
 for i in result:
     print(i)
+ 
+#print (result)
